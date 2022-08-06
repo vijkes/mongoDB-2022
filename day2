@@ -1,0 +1,718 @@
+test> show dbs
+admin     40.00 KiB
+config   108.00 KiB
+devbots   72.00 KiB
+local     72.00 KiB
+profile   72.00 KiB
+test> use profile;
+switched to db profile
+profile> show collections
+Heirarchy
+profile> db.Heirarchy.find()
+[
+  { _id: ObjectId("62ee68a26baab93b84e38ce2"), name: 'Hola' },
+  {
+    _id: ObjectId("62ee68d96baab93b84e38ce3"),
+    name: 'Wakil',
+    phone: '4654654',
+    email: 'wakil@highcourt.com',
+    purchases_courses: {
+      course_name: 'Economics',
+      price: '$23.3',
+      purchased_date: '33/32/23'
+    }
+  },
+  {
+    _id: ObjectId("62ee68d96baab93b84e38ce4"),
+    name: 'Khuni',
+    phone: '984765',
+    email: 'khuni@spot.com',
+    purchases_courses: {
+      course_name: 'Murder Mystery',
+      price: '$23.5',
+      purchased_date: '29/02/24'
+    }
+  },
+  {
+    _id: ObjectId("62ee68d96baab93b84e38ce5"),
+    name: 'Pirit',
+    phone: '044463',
+    email: 'pirit@suffered.com',
+    purchases_courses: [
+      {
+        course_name: 'Help 102',
+        price: '$33',
+        purchased_date: '3/12/23'
+      },
+      {
+        course_name: 'Good Vives',
+        price: 'Rs. 329',
+        purchased_date: '05/09/21'
+      }
+    ]
+  },
+  {
+    _id: ObjectId("62ee68d96baab93b84e38ce6"),
+    name: 'Judge',
+    phone: '456',
+    email: 'judge@justice.com',
+    purchases_courses: {
+      course_name: 'Justice God',
+      price: '$929',
+      purchased_date: '01/03/25'
+    },
+    contact_details: { whatsapp: '+91-98465132', 'Land-line': '22459' }
+  }
+]
+profile> db.Heirarchy.find().pretty()
+profile> db.Heirarchy.insertOne(
+... {
+..... "name": "Judge",
+..... "phone": "456",
+..... "email": "judge@justice.com",
+..... "purchases_courses":
+.....
+.....     {
+.......           "course_name": "Justice God",
+.......           "price": "$929",
+.......           "purchased_date": "01/03/25"
+.......           },
+.....
+..... "contact_details":
+.....     [
+.....           {
+.......                 "whatsapp" : "+91-98465132",
+profile> db.Heirarchy.find()
+[
+  { _id: ObjectId("62ee68a26baab93b84e38ce2"), name: 'Hola' },
+  {
+    _id: ObjectId("62ee68d96baab93b84e38ce3"),
+    name: 'Wakil',
+    phone: '4654654',
+    email: 'wakil@highcourt.com',
+    purchases_courses: {
+      course_name: 'Economics',
+      price: '$23.3',
+      purchased_date: '33/32/23'
+    }
+  },
+  {
+    _id: ObjectId("62ee68d96baab93b84e38ce4"),
+    name: 'Khuni',
+    phone: '984765',
+    email: 'khuni@spot.com',
+    purchases_courses: {
+      course_name: 'Murder Mystery',
+      price: '$23.5',
+      purchased_date: '29/02/24'
+    }
+  },
+  {
+    _id: ObjectId("62ee68d96baab93b84e38ce5"),
+    name: 'Pirit',
+    phone: '044463',
+    email: 'pirit@suffered.com',
+    purchases_courses: [
+      {
+        course_name: 'Help 102',
+        price: '$33',
+        purchased_date: '3/12/23'
+      },
+      {
+        course_name: 'Good Vives',
+        price: 'Rs. 329',
+        purchased_date: '05/09/21'
+      }
+    ]
+  },
+  {
+    _id: ObjectId("62ee6ea9cd513c44154fd95e"),
+    name: 'Judge',
+    phone: '456',
+    email: 'judge@justice.com',
+    purchases_courses: {
+      course_name: 'Justice God',
+      price: '$929',
+      purchased_date: '01/03/25'
+    },
+    contact_details: [ { whatsapp: '+91-98465132', 'Land-line': '22459' } ]
+  }
+]
+
+
+profile> db.Heirarchy.find({}, {Landline: 1})
+[
+  { _id: ObjectId("62ee68a26baab93b84e38ce2") },
+  { _id: ObjectId("62ee68d96baab93b84e38ce3") },
+  { _id: ObjectId("62ee68d96baab93b84e38ce4") },
+  { _id: ObjectId("62ee68d96baab93b84e38ce5") },
+  { _id: ObjectId("62ee6f1ecd513c44154fd95f") }
+]
+
+profile> db.Heirarchy.find({}, {phone: 1, name: 1})
+[
+  { _id: ObjectId("62ee68a26baab93b84e38ce2"), name: 'Hola' },
+  {
+    _id: ObjectId("62ee68d96baab93b84e38ce3"),
+    name: 'Wakil',
+    phone: '4654654'
+  },
+  {
+    _id: ObjectId("62ee68d96baab93b84e38ce4"),
+    name: 'Khuni',
+    phone: '984765'
+  },
+  {
+    _id: ObjectId("62ee68d96baab93b84e38ce5"),
+    name: 'Pirit',
+    phone: '044463'
+  },
+  {
+    _id: ObjectId("62ee6f1ecd513c44154fd95f"),
+    name: 'Judge',
+    phone: '456'
+  }
+]
+profile> db.Heirarchy.find({}, {phone: 1, name: 1, _id: 0})
+[
+  { name: 'Hola' },
+  { name: 'Wakil', phone: '4654654' },
+  { name: 'Khuni', phone: '984765' },
+  { name: 'Pirit', phone: '044463' },
+  { name: 'Judge', phone: '456' }
+]
+profile> db.Heirarchy.find({}, {phone: 1, name: 1, _id: 0, Landline: 1})
+[
+  { name: 'Hola' },
+  { name: 'Wakil', phone: '4654654' },
+  { name: 'Khuni', phone: '984765' },
+  { name: 'Pirit', phone: '044463' },
+  { name: 'Judge', phone: '456' }
+]
+profile> db.Heirarchy.find({}, {phone: 1, name: 1, _id: 0, whatsapp: 1})
+[
+  { name: 'Hola' },
+  { name: 'Wakil', phone: '4654654' },
+  { name: 'Khuni', phone: '984765' },
+  { name: 'Pirit', phone: '044463' },
+  { name: 'Judge', phone: '456' }
+]
+profile> db.Heirarchy.find({}, {phone: 1, name: 1, _id: 0, purchased_date: 1})
+[
+  { name: 'Hola' },
+  { name: 'Wakil', phone: '4654654' },
+  { name: 'Khuni', phone: '984765' },
+  { name: 'Pirit', phone: '044463' },
+  { name: 'Judge', phone: '456' }
+]
+profile> db.Heirarchy.find({}, {phone: 1, name: 1, _id: 0, email: 1})
+[
+  { name: 'Hola' },
+  { name: 'Wakil', phone: '4654654', email: 'wakil@highcourt.com' },
+  { name: 'Khuni', phone: '984765', email: 'khuni@spot.com' },
+  { name: 'Pirit', phone: '044463', email: 'pirit@suffered.com' },
+  { name: 'Judge', phone: '456', email: 'judge@justice.com' }
+]
+profile> db.Heirarchy.find({}, {phone: 1, name: 1, _id: 0, email: 1, purchases_courses: 1})
+[
+  { name: 'Hola' },
+  {
+    name: 'Wakil',
+    phone: '4654654',
+    email: 'wakil@highcourt.com',
+    purchases_courses: {
+      course_name: 'Economics',
+      price: '$23.3',
+      purchased_date: '33/32/23'
+    }
+  },
+  {
+    name: 'Khuni',
+    phone: '984765',
+    email: 'khuni@spot.com',
+    purchases_courses: {
+      course_name: 'Murder Mystery',
+      price: '$23.5',
+      purchased_date: '29/02/24'
+    }
+  },
+  {
+    name: 'Pirit',
+    phone: '044463',
+    email: 'pirit@suffered.com',
+    purchases_courses: [
+      {
+        course_name: 'Help 102',
+        price: '$33',
+        purchased_date: '3/12/23'
+      },
+      {
+        course_name: 'Good Vives',
+        price: 'Rs. 329',
+        purchased_date: '05/09/21'
+      }
+    ]
+  },
+  {
+    name: 'Judge',
+    phone: '456',
+    email: 'judge@justice.com',
+    purchases_courses: {
+      course_name: 'Justice God',
+      price: '$929',
+      purchased_date: '01/03/25'
+    }
+  }
+]
+
+
+
+
+profile> db.Heirarchy.find({}, {name: 1, _id: 0, purchases_courses: 1, price: 1})
+[
+  { name: 'Hola' },
+  {
+    name: 'Wakil',
+    purchases_courses: {
+      course_name: 'Economics',
+      price: '$23.3',
+      purchased_date: '33/32/23'
+    }
+  },
+  {
+    name: 'Khuni',
+    purchases_courses: {
+      course_name: 'Murder Mystery',
+      price: '$23.5',
+      purchased_date: '29/02/24'
+    }
+  },
+  {
+    name: 'Pirit',
+    purchases_courses: [
+      {
+        course_name: 'Help 102',
+        price: '$33',
+        purchased_date: '3/12/23'
+      },
+      {
+        course_name: 'Good Vives',
+        price: 'Rs. 329',
+        purchased_date: '05/09/21'
+      }
+    ]
+  },
+  {
+    name: 'Judge',
+    purchases_courses: {
+profile> db.Heirarchy.insert
+db.Heirarchy.insertMany  db.Heirarchy.insertOne
+
+
+test> db.test.insertMany(
+... [
+... { name:  " 1 " } ,
+... { name:  " 2 " } ,
+... { name:  " 3 " } ,
+... { name:  " 4 " } ,
+... { name:  " 5 " } ,
+... { name:  " 6 " } ,
+... { name:  " 7 " } ,
+... { name:  " 8 " } ,
+... { name:  " 9 " } ,
+... { name:  " 10 " } ,
+... { name:  " 11 " } ,
+... { name:  " 12 " } ,
+... { name:  " 13 " } ,
+... { name:  " 14 " } ,
+... { name:  " 15 " } ,
+... { name:  " 16 " } ,
+... { name:  " 17 " } ,
+... { name:  " 18 " } ,
+... { name:  " 19 " } ,
+... { name:  " 20 " } ,
+... { name:  " 21 " } ,
+... { name:  " 22 " } ,
+... { name:  " 23 " } ,
+... { name:  " 24 " } ,
+... { name:  " 25 " } ,
+... { name:  " 26 " } ,
+... { name:  " 27 " } ,
+... { name:  " 28 " } ,
+... { name:  " 29 " } ,
+... { name:  " 30 " } ,
+... { name:  " 31 " } ,
+... { name:  " 32 " } ,
+... { name:  " 33 " } ,
+... { name:  " 34 " } ,
+... { name:  " 35 " } ,
+... { name:  " 36 " } ,
+... { name:  " 37 " } ,
+... { name:  " 38 " } ,
+... { name:  " 39 " } ,
+... { name:  " 40 " } ,
+... { name:  " 41 " } ,
+... { name:  " 42 " } ,
+... { name:  " 43 " } ,
+... { name:  " 44 " } ,
+... { name:  " 45 " } ,
+... { name:  " 46 " } ,
+... { name:  " 47 " } ,
+test> db.test.find()
+[
+  { _id: ObjectId("62ee7c0dcd513c44154fd960"), name: ' 1 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd961"), name: ' 2 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd962"), name: ' 3 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd963"), name: ' 4 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd964"), name: ' 5 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd965"), name: ' 6 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd966"), name: ' 7 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd967"), name: ' 8 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd968"), name: ' 9 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd969"), name: ' 10 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd96a"), name: ' 11 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd96b"), name: ' 12 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd96c"), name: ' 13 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd96d"), name: ' 14 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd96e"), name: ' 15 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd96f"), name: ' 16 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd970"), name: ' 17 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd971"), name: ' 18 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd972"), name: ' 19 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd973"), name: ' 20 ' }
+]
+Type "it" for more
+test> it
+[
+  { _id: ObjectId("62ee7c0dcd513c44154fd974"), name: ' 21 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd975"), name: ' 22 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd976"), name: ' 23 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd977"), name: ' 24 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd978"), name: ' 25 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd979"), name: ' 26 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd97a"), name: ' 27 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd97b"), name: ' 28 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd97c"), name: ' 29 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd97d"), name: ' 30 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd97e"), name: ' 31 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd97f"), name: ' 32 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd980"), name: ' 33 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd981"), name: ' 34 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd982"), name: ' 35 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd983"), name: ' 36 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd984"), name: ' 37 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd985"), name: ' 38 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd986"), name: ' 39 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd987"), name: ' 40 ' }
+]
+Type "it" for more
+test> it
+[
+  { _id: ObjectId("62ee7c0dcd513c44154fd988"), name: ' 41 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd989"), name: ' 42 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd98a"), name: ' 43 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd98b"), name: ' 44 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd98c"), name: ' 45 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd98d"), name: ' 46 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd98e"), name: ' 47 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd98f"), name: ' 48 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd990"), name: ' 49 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd991"), name: ' 50 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd992"), name: '51' }
+]
+test> [
+...
+test> db.test.find({}, {_id: 0})
+[
+  { name: ' 1 ' },  { name: ' 2 ' },
+  { name: ' 3 ' },  { name: ' 4 ' },
+  { name: ' 5 ' },  { name: ' 6 ' },
+  { name: ' 7 ' },  { name: ' 8 ' },
+  { name: ' 9 ' },  { name: ' 10 ' },
+  { name: ' 11 ' }, { name: ' 12 ' },
+  { name: ' 13 ' }, { name: ' 14 ' },
+  { name: ' 15 ' }, { name: ' 16 ' },
+  { name: ' 17 ' }, { name: ' 18 ' },
+  { name: ' 19 ' }, { name: ' 20 ' }
+]
+Type "it" for more
+test> it
+[
+  { name: ' 21 ' }, { name: ' 22 ' },
+  { name: ' 23 ' }, { name: ' 24 ' },
+  { name: ' 25 ' }, { name: ' 26 ' },
+  { name: ' 27 ' }, { name: ' 28 ' },
+  { name: ' 29 ' }, { name: ' 30 ' },
+  { name: ' 31 ' }, { name: ' 32 ' },
+  { name: ' 33 ' }, { name: ' 34 ' },
+  { name: ' 35 ' }, { name: ' 36 ' },
+  { name: ' 37 ' }, { name: ' 38 ' },
+  { name: ' 39 ' }, { name: ' 40 ' }
+]
+Type "it" for more
+test> it
+[
+  { name: ' 41 ' },
+  { name: ' 42 ' },
+  { name: ' 43 ' },
+  { name: ' 44 ' },
+  { name: ' 45 ' },
+  { name: ' 46 ' },
+  { name: ' 47 ' },
+  { name: ' 48 ' },
+  { name: ' 49 ' },
+  { name: ' 50 ' },
+  { name: '51' }
+]
+t
+test> cons
+const
+
+console      constants    constructor
+
+test> console
+Console [console] {
+  log: [Function (anonymous)],
+  warn: [Function (anonymous)],
+  dir: [Function: dir],
+  time: [Function: time],
+  timeEnd: [Function: timeEnd],
+  timeLog: [Function: timeLog],
+  trace: [Function: trace],
+  assert: [Function: assert],
+  clear: [Function (anonymous)] { help: [Function (anonymous)] Help },
+  count: [Function: count],
+  countReset: [Function: countReset],
+  group: [Function: group],
+  groupEnd: [Function: groupEnd],
+  table: [Function: table],
+  debug: [Function: debug],
+  info: [Function (anonymous)],
+  dirxml: [Function: dirxml],
+  error: [Function (anonymous)],
+  groupCollapsed: [Function: groupCollapsed]
+}
+test> console.log("hi")
+hi
+
+test> console.info("hi")
+hi
+
+test> console.time("hi")
+
+test> console.time("hi:")
+
+test> console.time("hi:time")
+
+test> db.test.find().forEach
+[Function: forEach] AsyncFunction {
+  returnsPromise: true,
+  serverVersions: [ '0.0.0', '999.999.999' ],
+  apiVersions: [ 0, Infinity ],
+  topologies: [ 'ReplSet', 'Sharded', 'LoadBalanced', 'Standalone' ],
+  returnType: { type: 'unknown', attributes: {} },
+  deprecated: false,
+  platforms: [ 0, 1, 2 ],
+  isDirectShellCommand: false,
+  acceptsRawInput: false,
+  shellCommandCompleter: undefined,
+  help: [Function (anonymous)] Help
+}
+test> db.test.find()
+[
+  { _id: ObjectId("62ee7c0dcd513c44154fd960"), name: ' 1 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd961"), name: ' 2 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd962"), name: ' 3 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd963"), name: ' 4 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd964"), name: ' 5 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd965"), name: ' 6 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd966"), name: ' 7 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd967"), name: ' 8 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd968"), name: ' 9 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd969"), name: ' 10 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd96a"), name: ' 11 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd96b"), name: ' 12 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd96c"), name: ' 13 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd96d"), name: ' 14 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd96e"), name: ' 15 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd96f"), name: ' 16 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd970"), name: ' 17 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd971"), name: ' 18 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd972"), name: ' 19 ' },
+  { _id: ObjectId("62ee7c0dcd513c44154fd973"), name: ' 20 ' }
+]
+Type "it" for more
+test> db.test.find().forEach
+[Function: forEach] AsyncFunction {
+  returnsPromise: true,
+  serverVersions: [ '0.0.0', '999.999.999' ],
+  apiVersions: [ 0, Infinity ],
+  topologies: [ 'ReplSet', 'Sharded', 'LoadBalanced', 'Standalone' ],
+  returnType: { type: 'unknown', attributes: {} },
+  deprecated: false,
+  platforms: [ 0, 1, 2 ],
+  isDirectShellCommand: false,
+  acceptsRawInput: false,
+  shellCommandCompleter: undefined,
+  help: [Function (anonymous)] Help
+}
+test> db.test.find().forEach( (c) => { printjson(c) } )
+{ _id: ObjectId("62ee7c0dcd513c44154fd960"), name: ' 1 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd961"), name: ' 2 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd962"), name: ' 3 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd963"), name: ' 4 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd964"), name: ' 5 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd965"), name: ' 6 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd966"), name: ' 7 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd967"), name: ' 8 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd968"), name: ' 9 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd969"), name: ' 10 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd96a"), name: ' 11 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd96b"), name: ' 12 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd96c"), name: ' 13 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd96d"), name: ' 14 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd96e"), name: ' 15 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd96f"), name: ' 16 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd970"), name: ' 17 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd971"), name: ' 18 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd972"), name: ' 19 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd973"), name: ' 20 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd974"), name: ' 21 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd975"), name: ' 22 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd976"), name: ' 23 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd977"), name: ' 24 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd978"), name: ' 25 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd979"), name: ' 26 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd97a"), name: ' 27 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd97b"), name: ' 28 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd97c"), name: ' 29 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd97d"), name: ' 30 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd97e"), name: ' 31 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd97f"), name: ' 32 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd980"), name: ' 33 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd981"), name: ' 34 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd982"), name: ' 35 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd983"), name: ' 36 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd984"), name: ' 37 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd985"), name: ' 38 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd986"), name: ' 39 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd987"), name: ' 40 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd988"), name: ' 41 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd989"), name: ' 42 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd98a"), name: ' 43 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd98b"), name: ' 44 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd98c"), name: ' 45 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd98d"), name: ' 46 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd98e"), name: ' 47 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd98f"), name: ' 48 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd990"), name: ' 49 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd991"), name: ' 50 ' }
+{ _id: ObjectId("62ee7c0dcd513c44154fd992"), name: '51' }
+
+
+profile> db.Heirarchy.find({}, {phone: 1})
+[
+  { _id: ObjectId("62ee68a26baab93b84e38ce2") },
+  { _id: ObjectId("62ee68d96baab93b84e38ce3"), phone: '4654654' },
+  { _id: ObjectId("62ee68d96baab93b84e38ce4"), phone: '984765' },
+  { _id: ObjectId("62ee68d96baab93b84e38ce5"), phone: '044463' },
+  { _id: ObjectId("62ee6f1ecd513c44154fd95f"), phone: '456' }
+]
+profile> db.Heirarchy.find({}, {phone: 1, name:1})
+[
+  { _id: ObjectId("62ee68a26baab93b84e38ce2"), name: 'Hola' },
+  {
+    _id: ObjectId("62ee68d96baab93b84e38ce3"),
+    name: 'Wakil',
+    phone: '4654654'
+  },
+  {
+    _id: ObjectId("62ee68d96baab93b84e38ce4"),
+    name: 'Khuni',
+    phone: '984765'
+  },
+  {
+    _id: ObjectId("62ee68d96baab93b84e38ce5"),
+    name: 'Pirit',
+    phone: '044463'
+  },
+  {
+    _id: ObjectId("62ee6f1ecd513c44154fd95f"),
+    name: 'Judge',
+    phone: '456'
+  }
+]
+profile> db.Heirarchy.find({}, {phone: 1, name:1, _id: 0})
+[
+  { name: 'Hola' },
+  { name: 'Wakil', phone: '4654654' },
+  { name: 'Khuni', phone: '984765' },
+  { name: 'Pirit', phone: '044463' },
+  { name: 'Judge', phone: '456' }
+]
+profile> db.Heirarchy.findOne({}, {phone: 1, name:1, _id: 0})
+{ name: 'Hola' }
+profile> db.Heirarchy.findMany({}, {phone: 1, name:1, _id: 0})
+TypeError: db.Heirarchy.findMany is not a function
+profile> db.Heirarchy.find({}, {phone: 1, name:1, _id: 0})
+[
+  { name: 'Hola' },
+  { name: 'Wakil', phone: '4654654' },
+  { name: 'Khuni', phone: '984765' },
+  { name: 'Pirit', phone: '044463' },
+  { name: 'Judge', phone: '456' }
+]
+
+
+profile> db.Heirarchy.findOne({}, {phone: 1, name:1, _id: 0}).name
+Hola
+
+
+
+profile> db.Heirarchy.findOne({}, {phone: 1, name:1, _id: 0})
+{ name: 'Hola' }
+profile> db.Heirarchy.findOne({}, {phone: 1, name:1, _id: 1})
+{ _id: ObjectId("62ee68a26baab93b84e38ce2"), name: 'Hola' }
+profile> db.Heirarchy.findOne({}, {phone: 1, name:1, _id: 1}).purchased_courses
+
+
+
+
+
+profile> db.Heirarchy.findOne({name: "Judge"} ).purchases_courses
+{
+  course_name: 'Justice God',
+  price: '$929',
+  purchased_date: '01/03/25'
+}
+
+
+profile> db.Heirarchy.findOne({}, {phone: 1, name:1, _id: 1}).purchases_courses
+
+
+
+profile> db.Heirarchy.findOne({name: "Khuni"} ).purchases_courses
+{
+  course_name: 'Murder Mystery',
+  price: '$23.5',
+  purchased_date: '29/02/24'
+}
+profile> db.Heirarchy.findOne({name: "Khuni"} ).phone
+984765
+profile> history
+ReferenceError: history is not defined
+profile> db.Heirarchy.findOne({name: "Khuni"} ).purchases_courses
+{
+  course_name: 'Murder Mystery',
+  price: '$23.5',
+  purchased_date: '29/02/24'
+}
+profile> db.Heirarchy.findOne({name: "Khuni"} ).purchases_courses.course_name
+Murder Mystery
+profile> db.Heirarchy.findOne({name: "Khuni"} ).purchases_courses.Price
+
+profile> db.Heirarchy.findOne({name: "Khuni"} ).purchases_courses.price
+$23.5
+profile> db.Heirarchy.findOne({name: "Khuni"} ).purchases_courses.purchased_date
+29/02/24
+profile>
