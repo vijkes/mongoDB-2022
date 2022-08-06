@@ -84,6 +84,9 @@ profile> db.Heirarchy.insertOne(
 .....     [
 .....           {
 .......                 "whatsapp" : "+91-98465132",
+  
+  ///Projection
+  
 profile> db.Heirarchy.find()
 [
   { _id: ObjectId("62ee68a26baab93b84e38ce2"), name: 'Hola' },
