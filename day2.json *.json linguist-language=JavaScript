@@ -1,4 +1,4 @@
-*.json linguist-language=JavaScript
+
 
 test> show dbs
 admin     40.00 KiB
