@@ -1,0 +1,49 @@
+test> use lw;
+lw> show dbs;
+
+lw> db
+lw> db.students.insertOne("vimal")
+lw> db.students.find()
+
+lw> db.students.insertOne(  {"name": "vimal", "mob": 1111,"remark": "ok","workactive": true }  )
+
+lw> db.students.insertOne(
+... {
+..... name: "harry",
+..... whatsapp: 2222,
+..... city: "mumbai",
+..... salary: 23.5
+..... }
+... )
+
+
+lw> db.students.insertOne(
+... {
+..... name: "pop",
+..... email: "p@gmail.com",
+..... country: "india"
+..... }
+... )
+
+
+lw> db.students.find( { name: "vimal" } )
+lw> db.students.find({})
+lw> db.students.find()
+
+lw> db.students.deleteOne( { name: "pop"}  )
+lw> db.students.deleteOne({})
+
+lw> db.students.deleteOne( { remark: "ok" } )
+lw> db.students.deleteMany( { remark: "ok" } )
+
+
+lw> db.students.findOne(  { remark: "ok" }  )
+
+lw> db.students.updateOne(  { name: "tom" } ,  { $set:  { workactive: false }   } )
+
+lw> db.students.updateOne(  {} ,  { $set:  { workactive: false }   } )
+
+lw> db.students.updateMany(  {} ,  { $set:  { workactive: false }   } )
+
+
+lw> db.students.update(  {} ,  { $set:  { workactive: true }   } )
